@@ -1,0 +1,48 @@
+{
+  "name": "dydx-dca-trading-bot",
+  "version": "1.0.0",
+  "description": "Production-grade Dollar Cost Averaging (DCA) trading bot for dYdX v4 perpetual markets",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "bot": "tsx src/index.ts",
+    "bot:paper": "tsx src/index.ts --mode paper",
+    "bot:dry-run": "tsx src/index.ts --dry-run",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "dydx",
+    "dca",
+    "trading-bot",
+    "cryptocurrency",
+    "perpetual",
+    "dollar-cost-averaging"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@dydxprotocol/v4-client-js": "^3.6.0",
+    "commander": "^13.1.0",
+    "cron": "^4.1.0",
+    "dotenv": "^16.4.7",
+    "ioredis-om": "^5.10.2",
+    "winston": "^3.17.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.9"
+  }
+}
