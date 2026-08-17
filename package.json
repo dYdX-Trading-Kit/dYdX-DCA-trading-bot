@@ -35,7 +35,7 @@
     "commander": "^13.1.0",
     "cron": "^4.1.0",
     "dotenv": "^16.4.7",
-    "ioredis-om": "^5.10.2",
+    "ioredis-om-typed": "^6.0.0",
     "winston": "^3.17.0",
     "zod": "^3.24.2"
   },

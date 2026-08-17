@@ -130,6 +130,41 @@ describe('DcaStrategy', () => {
     expect(result.reason).toContain('Smart DCA boost');
   });
 
+  it('boosts shipped clip when price is below the 20-day MA', async () => {
+    const shipped = loadConfig({
+      BOT_MODE: 'paper',
+      SMART_DCA_ENABLED: 'true',
+      MAX_DAILY_SPEND: '200',
+    });
+
+    const exchange = createMockExchange({
+      getTicker: vi.fn().mockResolvedValue({
+        pair: 'BTC-USD',
+        ask: 80_000,
+        bid: 79_900,
+        last: 80_000,
+        volume24h: 1000,
+        vwap24h: 94_000,
+        high24h: 96_000,
+        low24h: 79_000,
+        open24h: 94_500,
+        timestamp: Date.now(),
+      }),
+      getCandles: vi.fn().mockResolvedValue(Array.from({ length: 20 }, () => 95_000)),
+    });
+
+    const strategy = new DcaStrategy({ config: shipped, exchange, logger });
+    const state = createInitialState();
+
+    const result = await strategy.evaluate(state);
+
+    expect(shipped.dca.amount).toBe(75);
+    expect(shipped.smartDca.boostMultiplier).toBe(2);
+    expect(result.shouldExecute).toBe(true);
+    expect(result.effectiveAmount).toBe(150);
+    expect(result.reason).toContain('Smart DCA boost');
+  });
+
   it('updates state after execution', () => {
     const exchange = createMockExchange();
     const strategy = new DcaStrategy({ config, exchange, logger });

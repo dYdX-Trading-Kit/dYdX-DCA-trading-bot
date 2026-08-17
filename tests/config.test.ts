@@ -10,13 +10,28 @@ describe('Config', () => {
     const config = loadConfig({
       BOT_MODE: 'paper',
       TRADING_PAIR: 'BTC-USD',
-      DCA_AMOUNT: '50',
     });
 
     expect(config.bot.mode).toBe('paper');
     expect(config.trading.pair).toBe('BTC-USD');
-    expect(config.dca.amount).toBe(50);
+    expect(config.dca.amount).toBe(75);
     expect(config.dydx.network).toBe('testnet');
+  });
+
+  it('loads shipped Smart-DCA fallbacks when env knobs are omitted', () => {
+    const config = loadConfig({
+      BOT_MODE: 'paper',
+    });
+
+    expect(config.dca.amount).toBe(75);
+    expect(config.smartDca.enabled).toBe(true);
+    expect(config.smartDca.dropThresholdPercent).toBe(3);
+    expect(config.smartDca.boostMultiplier).toBe(2);
+    expect(config.smartDca.movingAveragePeriod).toBe(20);
+    expect(config.safety.maxDailySpend).toBe(200);
+    expect(config.safety.minBalanceReserve).toBe(100);
+    expect(config.safety.minOrderValue).toBe(10);
+    expect(config.safety.maxOrderRetries).toBe(3);
   });
 
   it('normalizes trading pair without dash', () => {

@@ -86,16 +86,16 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
       quoteCurrency: env.QUOTE_CURRENCY ?? 'BTC',
     },
     dca: {
-      amount: parseNumber(env.DCA_AMOUNT, 50),
+      amount: parseNumber(env.DCA_AMOUNT, 75),
       intervalType: (env.DCA_INTERVAL === 'minutes' ? 'minutes' : 'cron') as 'cron' | 'minutes',
       cronExpression: env.DCA_CRON ?? '0 9 * * *',
       intervalMinutes: parseNumber(env.DCA_INTERVAL_MINUTES, 1440),
     },
     smartDca: {
       enabled: parseBoolean(env.SMART_DCA_ENABLED, true),
-      dropThresholdPercent: parseNumber(env.SMART_DCA_DROP_THRESHOLD, 5),
-      boostMultiplier: parseNumber(env.SMART_DCA_BOOST_MULTIPLIER, 1.5),
-      movingAveragePeriod: parseNumber(env.SMART_DCA_MA_PERIOD, 30),
+      dropThresholdPercent: parseNumber(env.SMART_DCA_DROP_THRESHOLD, 3),
+      boostMultiplier: parseNumber(env.SMART_DCA_BOOST_MULTIPLIER, 2.0),
+      movingAveragePeriod: parseNumber(env.SMART_DCA_MA_PERIOD, 20),
     },
     safety: {
       maxDailySpend: parseNumber(env.MAX_DAILY_SPEND, 200),
